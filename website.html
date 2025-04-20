@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cophttp | Hacker Style Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #2ecc71;
+            --matrix: #00ff41;
+            --dark: #0a0a0a;
+        }
+
+        /* Matrix Yazı Efekti */
+        @keyframes matrix {
+            0% { text-shadow: 0 0 10px var(--matrix); }
+            100% { text-shadow: 0 0 20px var(--matrix), 0 0 30px var(--matrix); }
+        }
+
+        /* Yıldız Animasyonu */
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 1s infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0.3; }
+        }
+
+        /* Dokunmatik Efekt JS ile kontrol edilecek */
+    </style>
+</head>
+<body style="background: var(--dark); overflow-x: hidden;">
+    <!-- Yıldızlar için container -->
+    <div id="starField"></div>
+
+    <!-- Hero Section (Animasyonlu) -->
+    <section class="hero" style="padding: 5rem; text-align: center; animation: fadeInUp 2s;">
+        <img src="profile.jpg" alt="Cophttp" 
+             style="width: 200px; border-radius: 50%; border: 3px solid var(--neon-green);
+                    box-shadow: 0 0 30px var(--neon-green); animation: float 3s ease-in-out infinite;">
+        <h1 style="color: var(--neon-green); font-size: 3rem; margin: 1rem; animation: matrix 2s infinite alternate;">
+            >_ Cophttp
+        </h1>
+        <div style="border: 1px solid var(--neon-green); padding: 1rem; display: inline-block;">
+            <p style="margin: 0; font-family: 'Courier New';">
+                Cybersecurity Expert | Python Developer
+            </p>
+        </div>
+    </section>
+
+    <!-- Tool Cards (Hover Efektli) -->
+    <div style="display: grid; gap: 2rem; padding: 3rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="tool-card" style="background: rgba(255,255,255,0.05); padding: 2rem; 
+                    border: 1px solid var(--neon-green); transition: 0.3s; cursor: pointer;">
+            <h2 style="color: var(--neon-green);">🔐 Port Scanner</h2>
+            <p style="color: #888;">Python ile geliştirilmiş port tarama aracı</p>
+            <div class="glow" style="width: 100%; height: 2px; background: var(--neon-green); margin-top: 1rem;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Dokunulan yerde yıldız oluştur
+        document.addEventListener('touchmove', function(e) {
+            createStars(e.touches[0].clientX, e.touches[0].clientY);
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            createStars(e.clientX, e.clientY);
+        });
+
+        function createStars(x, y) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = x + 'px';
+            star.style.top = y + 'px';
+            document.getElementById('starField').appendChild(star);
+            
+            // 0.5 saniye sonra yıldızı sil
+            setTimeout(() => star.remove(), 500);
+        }
+
+        // Matrix efekti için random yazılar
+        function createMatrixEffect() {
+            const chars = "01!@#$%^&*()";
+            const container = document.getElementById('starField');
+            
+            setInterval(() => {
+                const element = document.createElement('div');
+                element.style.position = 'fixed';
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.color = var(--matrix);
+                element.style.opacity = Math.random();
+                element.textContent = chars[Math.floor(Math.random() * chars.length)];
+                container.appendChild(element);
+                
+                setTimeout(() => element.remove(), 2000);
+            }, 50);
+        }
+
+        createMatrixEffect();
+    </script>
+</body>
+</html>
